@@ -1,0 +1,81 @@
+:root {
+    color-scheme: dark;
+}
+*,
+*::before {
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: grid;
+    place-content: center;
+    height: 100vh;
+    padding: 36px 36px 100px 36px;
+    grid-template-rows: 1fr;
+}
+
+#messages{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+    height: 100%;
+    scroll-behavior: smooth;
+    padding-bottom: 30px;
+}
+
+#chat{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 350px;
+    height: 100%;
+    position: relative;
+}
+
+#chat_form {
+    bottom: 0;
+    display: flex;
+    height: 48px;
+    left: 0;
+    padding: 4px;
+    position: absolute;
+    right: 0;
+}
+
+#input {
+    border-radius: 999px;
+    border: 1px;
+    flex: 1;
+    margin: 4px;
+    padding: 0 8px;
+}
+
+#input:focus {
+    outline: 0;
+}
+
+#container > button {
+    background-color: #772CE8; 
+    color: #fff;
+    border: 0;
+    margin: 4px;
+    border-radius: 4px;
+}
+
+#container >button:hover {
+    background: #6441A5;
+
+}
+
+#container {
+    display: flex;
+    width: 90%;
+}
+
+#twitch-video {
+    display: flex;
+    flex-direction: row;
+}

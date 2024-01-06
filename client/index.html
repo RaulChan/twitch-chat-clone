@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <script type="module">
+        import { io } from 'https://cdn.socket.io/4.7.2/socket.io.esm.min.js';
+
+        //Mock username can be improved using cookies or headers instead of localStorage.
+        const getUsername = async () => {
+            const username = localStorage.getItem('username')
+            if (username) {
+                console.log(`User existed ${username}`)
+                return username
+            }
+
+            const res = await fetch('https://random-data-api.com/api/users/random_user')
+            const { username: randomUsername } = await res.json()
+
+            localStorage.setItem('username', randomUsername)
+            return randomUsername
+        }
+
+        const socket = io({
+            auth:{
+                username: await getUsername(),
+                serverOffset: 0
+            }
+        });
+
+        const form = document.getElementById('chat_form')
+        const input = document.getElementById('input')
+        const messages = document.getElementById('messages')
+
+        socket.on('chat message', (msg, serverOffset, username) => {
+            const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16); // Generates a random hexadecimal color
+
+            const item = `<li>
+                <p><span style="color: ${randomColor}">${username}</span>: ${msg} </p>
+                </li>`
+            messages.insertAdjacentHTML('beforeend', item)
+            socket.auth.serverOffset = serverOffset
+
+            messages.scrollTop = messages.scrollHeight
+        })
+
+        form.addEventListener('submit', (e) => {
+          e.preventDefault()
+          
+          if(input.value)  {
+            socket.emit('chat message', input.value)
+            input.value = ''
+          }
+          return false
+        })
+    </script>
+    <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+    <div id="twitch-video">
+        <div class="video-container">
+            <img src="https://picsum.photos/1024.webp" alt="fake video preview">
+        </div>
+        <div id="chat">
+            <ul id="messages">
+    
+            </ul>
+            <form id="chat_form">
+                <div id="container">
+                    <input id="input" type="text" name="message" placeholder="Type a message" autocomplete="off">
+                    <button type="submit">Enviar</button>
+                </div>            
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
