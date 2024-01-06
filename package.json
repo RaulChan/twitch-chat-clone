@@ -2,9 +2,10 @@
   "name": "chat-back",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/index.js",
   "type": "module",
   "scripts": {
+    "start": "node server/index.js",
     "dev": "node --watch ./server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
