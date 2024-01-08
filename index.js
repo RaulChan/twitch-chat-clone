@@ -5,6 +5,7 @@ import { createClient } from "@libsql/client";
 
 import { Server } from 'socket.io';
 import { createServer } from 'node:http';
+import path from 'path';
 
 dotenv.config()
 const port = process.env.PORT ?? 3000;
@@ -81,7 +82,9 @@ app.use(express.static("client"));
 app.get('/', (req, res) => {
     //res.send('<h1>Esto es el chat</h1>')
     //Tomamos el current working directory y definimos el archivo que tiene que usar
-    res.sendFile(process.cwd() + '/client/index.html')
+    //res.sendFile(process.cwd() + '/client/index.html')
+    const file = path.join(process.cwd(), 'client', 'index.html');
+    res.sendFile(file)
 })
 
 
